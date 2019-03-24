@@ -44,21 +44,19 @@ var chartGroup = svg.append("g")
 
 // Step 3:  Import data from data.csv file
 // ========================================
-//var file = "assets/data/data.csv";
+var file = "assets/data/data.csv";
 
 /***
   d3.csv works similar to d3.json. The callback functions still takes two position arguments: (error, response).
 ****/ 
-console.log("----- Reading CSV -----");
-d3.csv("assets/data/data.csv", function(error, censusData) {
-    if (error) throw error;
+console.log("---- Testing Reading CSV ----");
+d3.csv(file).then(successHandle, errorHandle);
 
-    console.log("------- Log -------");
-    console.log(censusData);
-    console.log("------- Log -------");
+function errorHandle(error){
+    throw error;
+}
 
-    // Step 4: Parse the data 
-
+function successHandle(censusData) {
     censusData.forEach(function(cdata){
         cdata.healthcare = +cdata.healthcare;
         cdata.age = +cdata.age;
@@ -66,15 +64,15 @@ d3.csv("assets/data/data.csv", function(error, censusData) {
         cdata.smokes = + cdata.smokes;
     });
 
-    // Step 5: Create Scales
+        // Step 5: Create Scales
     // ==============================
 
     var xScaleLinear = d3.scaleLinear()
-        .domain([0, d3.max(cdata.age)])
+        .domain([0, d3.max(censusData, cdata => cdata.age)])
         .range([0, width]);
 
     var yScaleLinear = d3.scaleLinear()
-        .domain([0, d3.max(cdata.smokes)])
+        .domain([0, d3.max(censusData, cdata => cdata.smokes)])
         .range([height, 0]);
     
     // Step 6: Create Axes
@@ -88,7 +86,7 @@ d3.csv("assets/data/data.csv", function(error, censusData) {
 
     // Add bottomAxis
     chartGroup.append("g")
-        .attr(transform, `translate(0, ${height})`)
+        .attr("transform", `translate(0, ${height})`)
         .call(bottomAxis);
     chartGroup.append("g")
         .call(leftAxis);
@@ -110,8 +108,73 @@ d3.csv("assets/data/data.csv", function(error, censusData) {
     .attr("r", "10")
     .attr("fill", "red");
 
+
+
+}
+
+console.log("----- Reading CSV -----");
+// d3.csv("assets/data/data.csv", function(error, censusData) {
+//     if (error) throw error;
+
+//     console.log("------- Log -------");
+//     console.log(censusData);
+//     console.log("------- Log -------");
+
+//     // Step 4: Parse the data 
+
+//     censusData.forEach(function(cdata){
+//         cdata.healthcare = +cdata.healthcare;
+//         cdata.age = +cdata.age;
+//         cdata.poverty = +cdata.obesity;
+//         cdata.smokes = + cdata.smokes;
+//     });
+
+//     // Step 5: Create Scales
+//     // ==============================
+
+//     var xScaleLinear = d3.scaleLinear()
+//         .domain([0, d3.max(cdata.age)])
+//         .range([0, width]);
+
+//     var yScaleLinear = d3.scaleLinear()
+//         .domain([0, d3.max(cdata.smokes)])
+//         .range([height, 0]);
+    
+//     // Step 6: Create Axes
+//     // =================================
+
+//     var bottomAxis = d3.axisBottom(xScaleLinear);
+//     var leftAxis = d3.axisLeft(yScaleLinear);
+
+//     // Step 7: Append the axes to chartGroup 
+//     // =========================================
+
+//     // Add bottomAxis
+//     chartGroup.append("g")
+//         .attr(transform, `translate(0, ${height})`)
+//         .call(bottomAxis);
+//     chartGroup.append("g")
+//         .call(leftAxis);
+        
+
+    
+//     // Step 8: Set up scatter generator and append two SVG paths
+//     // ==============================================
+//     // Scatter generators for each line
+
+//     // append circles to data points, add transitions
+//     // Hint:  You may have to alter this code for the transition on page load
+//     var circlesGroup = chartGroup.selectAll("circle")
+//     .data(cdata)
+//     .enter()
+//     .append("circle")
+//     .attr("cx", (cdata, i) => xScale(i))
+//     .attr("cy", cdata => yScale(cdata))
+//     .attr("r", "10")
+//     .attr("fill", "red");
+
         
         
 
 
-});
+// });
