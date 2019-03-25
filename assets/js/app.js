@@ -286,7 +286,7 @@ function successHandle(censusData) {
     // Create Group for Y- axis labels
 
     var labelsYGroup = chartGroup.append("g")
-        .attr("transform", `translate(${height / 2 - 150}, ${0})`); 
+        .attr("transform", `translate(${(height / 2) - 150}, ${0})`); 
         //.attr("transform", "roatate(-90)");
 
     var smokesLabel = labelsYGroup.append("text")
@@ -365,7 +365,7 @@ function successHandle(censusData) {
             xAxis = renderXAxes(xScaleLinear, xAxis);
 
             // updates circles with new x values
-            circlesGroup = renderCircles(circlesGroup, xScaleLinear, chosenXAxis);
+            circlesGroup = renderCircles(circlesGroup, xScaleLinear, yScaleLinear, chosenXAxis, chosenYAxis);
 
 
             // updates tooltips with new info
@@ -417,7 +417,7 @@ function successHandle(censusData) {
             yAxis = renderYAxes(yScaleLinear, yAxis);
 
             // updates circles with new y values
-            circlesGroup = renderCircles(circlesGroup, xScaleLinear, chosenXAxis);
+            circlesGroup = renderCircles(circlesGroup, xScaleLinear, yScaleLinear, chosenXAxis, chosenYAxis);
 
 
             // updates tooltips with new info
