@@ -286,32 +286,41 @@ function successHandle(censusData) {
     // Create Group for Y- axis labels
 
     var labelsYGroup = chartGroup.append("g")
-        .attr("transform", `translate(${(height / 2) - 150}, ${0})`); 
-        //.attr("transform", "roatate(-90)");
+        //.attr("transform", `translate(${(height / 2) - 150}, ${0})`); 
+        .attr("transform", "rotate(-90)");
 
     var smokesLabel = labelsYGroup.append("text")
         //.attr("transform", "roatate(-90)")
         .attr("y", 0 - margin.left)
         .attr("x", 0 - (height/2))
+        .attr("dy", "1em")
         .attr("value", "smokes") // value to grab for event listener
         .classed("active", true)
         .text("Smokes");
+        console.log('look here');
+        console.log(labelsXGroup);
     
     var healthcareLabel = labelsYGroup.append("text")
         //.attr("transform", "roatate(-90)")
-        .attr("y", 0 - margin.left)
+        .attr("y", 0 - margin.left + 20)
         .attr("x", 0 - (height/2))
+        .attr("dy", "1em")
         .attr("value", "healthcare") // value to grab for event listener
         .classed("inactive", true)
         .text("Healthcare");
+        console.log('look here');
+        console.log(labelsXGroup);
     
     var obesityLabel = labelsYGroup.append("text")
         //.attr("transform", "roatate(-90)")
-        .attr("y", 0 - margin.left)
+        .attr("y", 0 - margin.left + 40)
         .attr("x", 0 - (height/2))
+        .attr("dy", "1em")
         .attr("value", "obesity") // value to grab for event listener
         .classed("inactive", true)
         .text("Obesity");
+        console.log('look here');
+        console.log(labelsXGroup);
     
  
     // adding text to the circles
@@ -360,6 +369,8 @@ function successHandle(censusData) {
             // functions here found above csv import
             // updates x scale for new data
             xScaleLinear = xScale(censusData, chosenXAxis);
+            
+            yScaleLinear = yScale(censusData, chosenYAxis);
 
             // updates x axis with transition
             xAxis = renderXAxes(xScaleLinear, xAxis);
@@ -409,9 +420,11 @@ function successHandle(censusData) {
 
             chosenYAxis = yvalue;
 
+            xScaleLinear = xScale(censusData, chosenXAxis);
             // functions here found above csv import
             // updates y scale for new data
-            yScaleLinear = xScale(censusData, chosenYAxis);
+            yScaleLinear = yScale(censusData, chosenYAxis);
+            
 
             // updates x axis with transition
             yAxis = renderYAxes(yScaleLinear, yAxis);
